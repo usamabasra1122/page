@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <title>Proxy Loader</title>
+  <title>Embed Loader</title>
   <style>
     body { margin: 0; overflow: hidden; }
-    #loader { font-family: Arial; padding: 20px; }
-    iframe { width: 100vw; height: 100vh; border: none; display: none; }
+    #fallback {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: Arial; font-size: 18px;
+    }
+    iframe {
+      width: 100vw; height: 100vh; border: none;
+    }
   </style>
 </head>
 <body>
-  <div id="loader">Loading page, please wait...</div>
-  <iframe id="contentFrame"></iframe>
 
-  <script>
-    var frame = document.getElementById("contentFrame");
-    frame.src = "https://v4.progresscenter.io/iframe-integration-viewer?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1lcmFJZCI6IjkxMDAwNTYxIiwiaWF0IjoxNzU2NDY0OTUzfQ.Xayf7UCjImc7df8ZL3kcaWKnF0mgbDOqmxcEmFH_gxk";
+<div id="fallback">Loading content...</div>
 
-    frame.onload = function () {
-      document.getElementById("loader").style.display = "none";
-      frame.style.display = "block";
-    };
-  </script>
+<script>
+  var iframe = document.createElement('iframe');
+  iframe.setAttribute('referrerpolicy', 'no-referrer');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups');
+  iframe.src = "https://v4.progresscenter.io/iframe-integration-viewer?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1lcmFJZCI6IjkxMDAwNTYxIiwiaWF0IjoxNzU2NDY0OTUzfQ.Xayf7UCjImc7df8ZL3kcaWKnF0mgbDOqmxcEmFH_gxk";
+  document.body.appendChild(iframe);
+  iframe.onload = function () {
+    document.getElementById("fallback").style.display = "none";
+  };
+</script>
+
 </body>
 </html>
