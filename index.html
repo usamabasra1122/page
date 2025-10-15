@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Proxy Wrapper</title>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Proxy Loader</title>
   <style>
     body { margin: 0; overflow: hidden; }
-    iframe { width: 100vw; height: 100vh; border: none; }
+    #loader { font-family: Arial; padding: 20px; }
+    iframe { width: 100vw; height: 100vh; border: none; display: none; }
   </style>
 </head>
 <body>
-  <iframe
-    src="https://v4.progresscenter.io/iframe-integration-viewer?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1lcmFJZCI6IjkxMDAwNTYxIiwiaWF0IjoxNzU2NDY0OTUzfQ.Xayf7UCjImc7df8ZL3kcaWKnF0mgbDOqmxcEmFH_gxk"
-    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-    referrerpolicy="no-referrer"
-  ></iframe>
+  <div id="loader">Loading page, please wait...</div>
+  <iframe id="contentFrame"></iframe>
+
+  <script>
+    var frame = document.getElementById("contentFrame");
+    frame.src = "https://v4.progresscenter.io/iframe-integration-viewer?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW1lcmFJZCI6IjkxMDAwNTYxIiwiaWF0IjoxNzU2NDY0OTUzfQ.Xayf7UCjImc7df8ZL3kcaWKnF0mgbDOqmxcEmFH_gxk";
+
+    frame.onload = function () {
+      document.getElementById("loader").style.display = "none";
+      frame.style.display = "block";
+    };
+  </script>
 </body>
 </html>
